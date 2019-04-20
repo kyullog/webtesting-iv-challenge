@@ -17,4 +17,14 @@ server.post("/users", async (req, res) => {
   }
 });
 
+server.post("/users/:id/delete", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const deleted = await Users.remove(id);
+    res.status(200).json({ message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ err: "There was a problem deleting the user" });
+  }
+});
+
 module.exports = server;
