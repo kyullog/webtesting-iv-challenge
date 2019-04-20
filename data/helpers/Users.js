@@ -6,5 +6,11 @@ module.exports = {
     return db("users")
       .where({ id })
       .first();
+  },
+
+  remove: async id => {
+    return db("users")
+      .where({ id })
+      .del();
   }
 };
