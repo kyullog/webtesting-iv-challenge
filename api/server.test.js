@@ -7,10 +7,10 @@ describe("The Server", () => {
     const res = await request(server).get("/");
     expect(res.status).toBe(200);
   });
+  beforeEach(() => {
+    return db("users").truncate();
+  });
   describe("POST /users", () => {
-    beforeEach(() => {
-      return db("users").truncate();
-    });
     it("should respond with status code 201 on successful addition", async () => {
       const testUser = { name: "Jonathan" };
       const res = await request(server)
@@ -35,6 +35,11 @@ describe("The Server", () => {
       await db("users").insert({ name: "Jonathan" });
       const res = await request(server).post("/users/1/delete");
       expect(res.status).toBe(200);
+    });
+    it("should return a 404 status if invalid user id used", async () => {
+      await db("users").insert({ name: "Jonathan" });
+      const res = await request(server).post("/users/3/delete");
+      expect(res.status).toBe(404);
     });
   });
 });
