@@ -14,8 +14,14 @@ describe("The Server", () => {
 
     it("should create a new user and return the id/name", async () => {
       const testUser = { name: "Jonathan" };
-      const res = await request(server).post("/users", testUser);
-      expect(res.body).toEqual(testUser);
+      const res = await request(server)
+        .post("/users")
+        .send(testUser);
+      expect(res.body).toEqual({ id: 1, name: "Jonathan" });
+    });
+    it("should respond with status 500 if no data is posted", async () => {
+      const res = await request(server).post("/users");
+      expect(res.status).toBe(500);
     });
   });
 });
