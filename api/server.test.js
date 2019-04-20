@@ -30,4 +30,11 @@ describe("The Server", () => {
       expect(res.status).toBe(500);
     });
   });
+  describe("POST /users/id/delete", () => {
+    it("should respond with status code 200 on successful delete", async () => {
+      await db("users").insert({ name: "Jonathan" });
+      const res = await request(server).post("/users/1/delete");
+      expect(res.status).toBe(200);
+    });
+  });
 });
