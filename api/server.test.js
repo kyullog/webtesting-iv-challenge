@@ -11,7 +11,13 @@ describe("The Server", () => {
     beforeEach(() => {
       return db("users").truncate();
     });
-
+    it("should respond with status code 201 on successful addition", async () => {
+      const testUser = { name: "Jonathan" };
+      const res = await request(server)
+        .post("/users")
+        .send(testUser);
+      expect(res.status).toBe(201);
+    });
     it("should create a new user and return the id/name", async () => {
       const testUser = { name: "Jonathan" };
       const res = await request(server)

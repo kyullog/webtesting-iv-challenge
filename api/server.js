@@ -11,7 +11,7 @@ server.get("/", (req, res) => {
 server.post("/users", async (req, res) => {
   try {
     const newUser = await Users.addUser(req.body);
-    res.status(200).json(newUser);
+    res.status(201).json(newUser);
   } catch (err) {
     res.status(500).json({ err: "There was a problem adding user" });
   }
